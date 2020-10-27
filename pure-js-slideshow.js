@@ -724,6 +724,8 @@ pure_js_slideshow.prototype.autoPlay = function(state){
     this.autoplay = state
     if(state){
         this.animate(this.currentIndex);
+    }else{
+        clearTimeout(this.animate_timeout_handler);
     }
 }
 pure_js_slideshow.prototype.getImages = function(){
