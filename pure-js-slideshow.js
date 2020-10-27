@@ -549,7 +549,7 @@ function pure_js_slideshow(options){
         img.onload = function(){
             console.log('image:'+src+' loaded');
             var w = img.width;
-            var h = img.width;
+            var h = img.height;
             var direction = 'horizontal';
             if(h>w){
                 direction = 'vertical';
