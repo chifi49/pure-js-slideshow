@@ -33,6 +33,102 @@ function pure_js_slideshow(options){
         this.ghost.style.cssText = 'margin:0;padding:0;position:fixed;top:0px;left:0px;right:0px;bottom:0px;opacity:0;z-index:-1;-moz-opacity:0;-webkit-opacity:0;'
         document.body.appendChild(this.ghost);
     }
+    this.drag_ghost = document.createElement('div');
+    this.drag_ghost.style.cssText = 'position:absolute;top:0px;left:0px;right:0px;bottom:0px;';
+    this.drag_ghost.setAttribute('class','pure-js-slideshow-drag');
+
+    this.dragging= false;
+    this.dragStartX = 0;
+    this.dragDiff = 0;
+    this.drag_autoplay = false;
+    this.ondragstart = function(event){
+        if(me.animating){
+            event.preventDefault();
+            return;
+        }
+        //save the previous autoplay state
+        me.drag_autoplay = me.autoplay;
+        me.autoplay = false;
+        clearTimeout(me.animate_timeout_handler);
+
+        me.dragging = true;
+        me.dragStartX = event.pageX;
+        document.addEventListener('mouseup',me.ondragend)
+        document.addEventListener('mousemove',me.ondragging);
+
+        if(me.animation=='fade'){
+            for(var i in me.children){
+                me.children[i].style.opacity = 1;
+                if(i!=me.currentIndex){
+                me.children[i].style.left=me.width+'px';
+                }
+            }
+        }
+    };
+    this.ondragend = function(){
+        me.dragging = false;
+        var diff = me.dragDiff;
+        me.dragDiff = 0;
+        //restore the old autoplay
+        me.autoplay = me.drag_autoplay;
+
+        if(me.animation=='fade'){
+            for(var i in me.children){
+                me.children[i].style.left='0px';
+                if(i!=me.currentIndex){
+                    me.children[i].style.opacity=0;
+                }
+            }
+        }
+
+        if(me.autoplay){
+            me.animate_timeout_handler = setTimeout(function(){me.animate(me.currentIndex);},me.transition);
+        }
+        document.removeEventListener('mouseup',me.ondragend);
+        document.removeEventListener('mousemove',me.ondragging)
+
+        
+    }
+    this.ondragging = function(event){
+        if(me.dragging){
+            //console.log(event.pageX);
+            var diff = ( event.pageX - me.dragStartX );
+            me.dragDiff = diff;
+            //console.log(diff);
+            if(diff<0){
+                //console.log('going left')
+                var current_child = me.children[me.currentIndex];
+                //console.log(current_child);
+                //var left = parseInt( current_child.style.left.replace('px',''));
+                //var newleft = left + diff;
+                current_child.style.left =  diff +'px';
+
+                var nindex = me.currentIndex+1>=me.children_size?0:me.currentIndex+1;
+                if(nindex>0){
+                    var next_child = me.children[nindex];
+                    //var nleft = parseInt( next_child.style.left.replace('px',''));
+                    var nnewleft = me.width + diff;
+                    next_child.style.left = nnewleft+'px'; 
+                }else{
+                    //do not make a drag
+                }
+            }else{
+                //console.log('going right');
+                var current_child = me.children[me.currentIndex];
+                current_child.style.left = diff+'px';
+
+                var pindex = me.currentIndex-1<0?-1:me.currentIndex-1;
+                if(pindex>=0){
+                    var prev_child = me.children[pindex];
+                    var pnewleft = me.width *-1 + diff;
+                    prev_child.style.left = pnewleft+'px';
+                }
+            }
+        }
+    }
+    this.drag_ghost.addEventListener('mousedown',this.ondragstart);
+    
+
     this.prnt = typeof options.el=='string'?document.querySelector(options.el):options.el;
     this.prnt.style.position = 'relative';
 
@@ -40,6 +136,8 @@ function pure_js_slideshow(options){
     this.elem.style.position = 'relative';
     this.elem.style.overflowX='hidden';
     this.elem.style.overflowY = 'hidden';
+
+    
 
 
     this.children_list = this.elem.querySelectorAll('.pure-js-slideshow-content');
@@ -744,6 +842,8 @@ function pure_js_slideshow(options){
         
     }//this.animate
     this.loadImages(this.images);
+    this.drag_ghost.style.zIndex = this.images.length;
+    this.elem.appendChild(this.drag_ghost);
     return this;
 }
 pure_js_slideshow.prototype.thumbsVisible = function(visible){
