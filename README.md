@@ -3,11 +3,11 @@ A content/gallery slideshow with fade effect made with pure Javascript.
 No external dependencies required
 
 ## Installation
-####Include the pure-js-slideshow.js script 
+#### Include the pure-js-slideshow.js script 
 
 `<script src="pure-js-slideshow.js"></script>`
 
-####Minimum html required
+#### Minimum html required
 ```
 <div id="my-custom-id" class="pure-js-slideshow">
 	<div class="pure-js-slideshow-container">
@@ -21,7 +21,7 @@ No external dependencies required
 </div>
 ```
 
-####Javascript Code with  minimum parameters
+#### Javascript Code with  minimum parameters
 
 ```
 new pure_js_slideshow({
@@ -29,7 +29,7 @@ new pure_js_slideshow({
 })
 ```
 
-####Javascript code with all available parameters
+#### Javascript code with all available parameters
 
 ```
 new pure_js_slideshow(
