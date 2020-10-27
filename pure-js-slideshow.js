@@ -722,6 +722,9 @@ pure_js_slideshow.prototype.lastSlide = function(){
 }
 pure_js_slideshow.prototype.autoPlay = function(state){
     this.autoplay = state
+    if(state){
+        this.animate(this.currentIndex);
+    }
 }
 pure_js_slideshow.prototype.getImages = function(){
     return this.images;
