@@ -421,13 +421,21 @@ function pure_js_slideshow(options){
         })
         var t = me.thumbElem.querySelector("div[data-index='"+cindex+"']")
         var left = parseInt(t.getAttribute('data-x'));
-        console.log(cindex,pindex);
-        if(pindex<cindex){
-            //we move left
-            me.moveThumbs('left',pindex,cindex)
-        }else{
-            //we move right
-            me.moveThumbs('right',pindex,cindex);
+        var twidth = me.width;
+        var tblwidth = me.thumbTbl.offsetWidth;
+        var smove = false;
+        if(twidth<tblwidth){
+            smove = true;
+        }
+
+        if(smove){
+            if(pindex<cindex){
+                //we move left
+                me.moveThumbs('left',pindex,cindex)
+            }else{
+                //we move right
+                me.moveThumbs('right',pindex,cindex);
+            }
         }
         t.style.borderStyle='solid';
         t.style.borderColor=me.thumbsSelBorderColor;
