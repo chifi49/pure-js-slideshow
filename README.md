@@ -3,11 +3,11 @@ A content/gallery slideshow with fade effect made with pure Javascript.
 No external dependencies required
 
 ## Installation
-Include the pure-js-slideshow.js script 
+####Include the pure-js-slideshow.js script 
 
 `<script src="pure-js-slideshow.js"></script>`
 
-Minimum html required
+####Minimum html required
 ```
 <div id="my-custom-id" class="pure-js-slideshow">
 	<div class="pure-js-slideshow-container">
@@ -19,19 +19,17 @@ Minimum html required
         </div>
 	</div>
 </div>
-
 ```
 
-Javascript Code with  minimum parameters
+####Javascript Code with  minimum parameters
 
 ```
 new pure_js_slideshow({
     'el': document.querySelector('#my-custom-id'),//or any other selector that returns one element
 })
-
 ```
 
-Javascript code with all available parameters
+####Javascript code with all available parameters
 
 ```
 new pure_js_slideshow(
@@ -110,9 +108,10 @@ new pure_js_slideshow(
     }
 );
 ```
+
 ### Methods
 
-the call to `new pure_js_slideshow({el:...}) return a javascript object with methods you can call
+The call to `new pure_js_slideshow({el:...}) returns an object with methods you can call
 
 `var slide1 = new pure_js_slideshow({el:document.getElementById('pure-slideshow')})`
 
@@ -131,3 +130,7 @@ moves to the first content/image
 #### last
 `slide1.last()`
 moves to the last content/image
+
+#### currentIndex
+`slide1.getCurrentIndex()`
+gets the current index of content/image
