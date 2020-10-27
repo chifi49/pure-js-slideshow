@@ -1,5 +1,5 @@
 # pure-js-slideshow
-A content/gallery slideshow with fade effect made with pure Javascript.
+A content/gallery slideshow with fade or slide effect made with pure Javascript.
 No external dependencies required (~5.5kb gzipped)
 
 ## Installation
@@ -35,6 +35,7 @@ new pure_js_slideshow({
 new pure_js_slideshow(
     {
         el:'#pure-js-slideshow',
+        animation:'fade',//set to "fade" or "slide"
         autoplay:true,
         mobile:{
             enabled: false, //your custom logic to detect if its mobile or not 
