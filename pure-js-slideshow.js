@@ -218,7 +218,6 @@ function pure_js_slideshow(options){
     
     this.currentIndex = 0;
     this.animation = options.animation || 'fade';
-    console.log(this.animation);
 
     this.slide_callback = options.slideClicked?options.slideClicked:function(){}
     
@@ -370,7 +369,7 @@ function pure_js_slideshow(options){
             var left = parseFloat(el.style.left.replace('px',''));
             el.style.left = left-pixel+'px';
             last = +new Date();
-            //console.log('left',el.style.left.replace('px',''));
+            
 
             if ( parseFloat(el.style.left.replace('px','')) > toX) {
            // (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 20);
@@ -547,7 +546,7 @@ function pure_js_slideshow(options){
     this.loadImage = function(src,index,done){
         var img = new Image();
         img.onload = function(){
-            console.log('image:'+src+' loaded');
+            
             var w = img.width;
             var h = img.height;
             var direction = 'horizontal';
@@ -567,7 +566,7 @@ function pure_js_slideshow(options){
     }
     this.loadImages = function(images){
         var total = images.length;
-        console.log('total images:'+total);
+        
         var counter = 0;
         function images_loaded(){
             counter++;
@@ -623,13 +622,11 @@ function pure_js_slideshow(options){
         var cindex = currentIndex;
         var nindex = cindex+1>=me.children_size?0:cindex+1;
 
-        console.log('indexes:',currentIndex,toIndex);
-        console.log('indexes',cindex,nindex);
 
         if(typeof toIndex!=='undefined' && toIndex!=currentIndex){
             nindex = toIndex;
         }else if(typeof toIndex!=='undefined' && toIndex==currentIndex){
-            console.log('indexes are same');
+            
             return;
         }
         var current_child = me.children[cindex];
