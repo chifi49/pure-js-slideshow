@@ -720,11 +720,8 @@ pure_js_slideshow.prototype.firstSlide = function(){
 pure_js_slideshow.prototype.lastSlide = function(){
     this.moveTo(this.children_size-1);
 }
-pure_js_slideshow.prototype.play = function(){
-    this.autoplay = true;
-}
-pure_js_slideshow.prototype.pause = function(){
-    this.autoplay = false;
+pure_js_slideshow.prototype.autoPlay = function(state){
+    this.autplay = state
 }
 pure_js_slideshow.prototype.getImages = function(){
     return this.images;

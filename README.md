@@ -115,20 +115,20 @@ The call to `new pure_js_slideshow({el:...}) returns an object with methods you 
 
 `var slide1 = new pure_js_slideshow({el:document.getElementById('pure-slideshow')})`
 
-#### previousContent
-`slide1.previousContent()`
+#### previousSlide
+`slide1.previousSlide()`
 moves to the previous content/image
 
-#### nextContent
-`slide1.nextContent()`
+#### nextSlide
+`slide1.nextSlide()`
 moves to the next content/image
 
-#### first
-`slide1.first()`
+#### firstSlide
+`slide1.firstSlide()`
 moves to the first content/image
 
-#### last
-`slide1.last()`
+#### lastSlide
+`slide1.lastSlide()`
 moves to the last content/image
 
 #### currentIndex
@@ -138,3 +138,7 @@ gets the current index of content/image
 #### thumbsVisible(true or false)
 `slide1.thumbsVisible(true)`
 changes visibility of thumbnails to show or hidden
+
+#### autoPlay(true or false)
+`slide1.autoPlay(false)`
+stop or start the autoplay
