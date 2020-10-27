@@ -109,7 +109,7 @@ new pure_js_slideshow(
 );
 ```
 
-### Methods
+## Methods
 
 The call to `new pure_js_slideshow({el:...}) returns an object with methods you can call
 
