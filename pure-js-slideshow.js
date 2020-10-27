@@ -370,7 +370,7 @@ function pure_js_slideshow(options){
             var left = parseFloat(el.style.left.replace('px',''));
             el.style.left = left-pixel+'px';
             last = +new Date();
-            console.log('left',el.style.left.replace('px',''));
+            //console.log('left',el.style.left.replace('px',''));
 
             if ( parseFloat(el.style.left.replace('px','')) > toX) {
            // (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 20);
@@ -622,15 +622,33 @@ function pure_js_slideshow(options){
         
         var cindex = currentIndex;
         var nindex = cindex+1>=me.children_size?0:cindex+1;
+
+        console.log('indexes:',currentIndex,toIndex);
+        console.log('indexes',cindex,nindex);
+
         if(typeof toIndex!=='undefined' && toIndex!=currentIndex){
             nindex = toIndex;
         }else if(typeof toIndex!=='undefined' && toIndex==currentIndex){
+            console.log('indexes are same');
             return;
         }
         var current_child = me.children[cindex];
         var next_child = me.children[nindex];
-        current_child.style.opacity = 1;
-        next_child.style.opacity = 0;
+
+        if(me.animation=='fade'){
+            current_child.style.opacity = 1;
+            next_child.style.opacity = 0;
+        }else if(me.animation=='slide'){
+            current_child.style.left = '0px';
+            //we need to check if its programmatically or it is from user interaction
+            if(nindex<cindex){
+                //it will slide on the right
+                next_child.style.left = me.width * -1 +'px';
+            }else{
+                //it will slide on the left
+                next_child.style.left = me.width +'px';
+            }
+        }
 
         me.selectPage(nindex);
         me.selectThumb(nindex,cindex);//give also the previous index
@@ -642,32 +660,90 @@ function pure_js_slideshow(options){
         next_child.style.zIndex = czindex;
 
         me.animating = true;
-        me.fadeOut(current_child, me.transition, function(){
-            
-            me.synced(function(){
-                me.currentIndex = nindex;
+
+        if(me.animation=='fade'){
+            me.fadeOut(current_child, me.transition, function(){
                 
-                me.animated_callback(me,nindex)
-                if(me.autoplay){
-                    me.animate_timeout_handler = setTimeout(function(){
-                        me.animate(nindex);
-                    },me.timeout);
-                }
+                me.synced(function(){
+                    me.currentIndex = nindex;
+                    
+                    me.animated_callback(me,nindex)
+                    if(me.autoplay){
+                        me.animate_timeout_handler = setTimeout(function(){
+                            me.animate(nindex);
+                        },me.timeout);
+                    }
+                })
             })
-        })
-        me.fadeIn(next_child, me.transition, function(){
-            
-            me.synced(function(){
-                me.currentIndex = nindex;
+            me.fadeIn(next_child, me.transition, function(){
                 
-                me.animated_callback(me,nindex);
-                if(me.autoplay){
-                    me.animate_timeout_handler = setTimeout(function(){
-                        me.animate(nindex);
-                    },me.timeout);
-                }
+                me.synced(function(){
+                    me.currentIndex = nindex;
+                    
+                    me.animated_callback(me,nindex);
+                    if(me.autoplay){
+                        me.animate_timeout_handler = setTimeout(function(){
+                            me.animate(nindex);
+                        },me.timeout);
+                    }
+                })
             })
-        })
+        }else if(me.animation=='slide'){
+            if(nindex<cindex){
+                var distance = me.width;
+                me.slideright(next_child,me.transition,distance,0,function(){
+                    me.synced(function(){
+                        me.currentIndex = nindex;
+                        
+                        me.animated_callback(me,nindex)
+                        if(me.autoplay){
+                            me.animate_timeout_handler = setTimeout(function(){
+                                me.animate(nindex);
+                            },me.timeout);
+                        }
+                    })
+                })
+                me.slideright(current_child,me.transition,distance, me.width,function(){
+                    me.synced(function(){
+                        me.currentIndex = nindex;
+                        
+                        me.animated_callback(me,nindex);
+                        if(me.autoplay){
+                            me.animate_timeout_handler = setTimeout(function(){
+                                me.animate(nindex);
+                            },me.timeout);
+                        }
+                    })
+                })
+            }else if(nindex>cindex){
+                //the normal one
+                var distance = me.width;
+                me.slideleft(next_child,me.transition,distance,0,function(){
+                    me.synced(function(){
+                        me.currentIndex = nindex;
+                        
+                        me.animated_callback(me,nindex)
+                        if(me.autoplay){
+                            me.animate_timeout_handler = setTimeout(function(){
+                                me.animate(nindex);
+                            },me.timeout);
+                        }
+                    })
+                })
+                me.slideleft(current_child,me.transition,distance, me.width*-1,function(){
+                    me.synced(function(){
+                        me.currentIndex = nindex;
+                        
+                        me.animated_callback(me,nindex);
+                        if(me.autoplay){
+                            me.animate_timeout_handler = setTimeout(function(){
+                                me.animate(nindex);
+                            },me.timeout);
+                        }
+                    })
+                })
+            }
+        }
         
     }//this.animate
     this.loadImages(this.images);
