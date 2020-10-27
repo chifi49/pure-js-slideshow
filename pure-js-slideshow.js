@@ -479,6 +479,16 @@ function pure_js_slideshow(options){
 
 
     //console.log(this.width, this.height);
+    this.resize_timeout = 0;
+    this.onresized = function(){
+        if(me.thumbnails){
+            var mewidth = me.width;
+            var twidth = me.thumbTbl.offsetWidth;
+            if(me.width>twidth){
+                me.thumbTbl.style.left = '0px';
+            }
+        }
+    };
     window.addEventListener('resize',function(){
        // console.log(me.width, me.height);
         me.width = me.getWidth();
@@ -497,6 +507,10 @@ function pure_js_slideshow(options){
         }
         me.elem.style.height = heighttmp+'px';
         me.resizeBackgrounds();
+        clearTimeout(me.resize_timeout);
+        setTimeout(function(){
+            me.onresized();
+        },100);
     })
 
     this.fadeIn = function(el, time, done) {
