@@ -36,9 +36,6 @@ function pure_js_slideshow(options){
     this.prnt = typeof options.el=='string'?document.querySelector(options.el):options.el;
     this.prnt.style.position = 'relative';
 
-    //this.prnt.style.overflowX='hidden';
-    //this.prnt.style.overflowY = 'hidden';
-
     this.elem = this.prnt.querySelector('.pure-js-slideshow-container');
     this.elem.style.position = 'relative';
     this.elem.style.overflowX='hidden';
@@ -152,7 +149,7 @@ function pure_js_slideshow(options){
         pagea.setAttribute('data-index',index);
         pagea.onclick = function(){
             var cindex = parseInt(this.getAttribute('data-index'))
-           // alert(cindex);
+            
             me.moveTo(cindex)
 
             me.page_callback(me,cindex,me.images[cindex])
@@ -342,7 +339,7 @@ function pure_js_slideshow(options){
                 if(diff>0 && Math.abs(toX)>diff){
                     toX = diff*-1;
                 }
-                //this.thumbTbl.style.left = toX+'px';
+                
                 me.slideleft(me.thumbTbl,me.transition,distance,(toX),function(){})
             }else if(direction=='right' && fromIndex!=toIndex){
                 var twidth = me.width;
@@ -355,7 +352,6 @@ function pure_js_slideshow(options){
                 if(toX>0){
                     toX = 0;
                 }
-                //this.thumbTbl.style.left = toX+'px';
                 
                 me.slideright(me.thumbTbl,me.transition,distance,(toX),function(){})
             }
@@ -363,13 +359,11 @@ function pure_js_slideshow(options){
     }
     this.slideleft = function(el,time,distance,toX,done){
         var last = +new Date();
-        //console.log(parseFloat(el.style.left.replace('px','')));
+        
         var pixel = parseFloat(distance/parseFloat((time/20)));
-        //console.log('pixel',pixel);
+        
         function tick(){
             
-            //console.log((new Date()-last)/time);
-            //el.style.left =  parseFloat(el.style.left.replace('px','')) +  ( ( (new Date() - last) / time  *500 ) ) +'px';
             var left = parseFloat(el.style.left.replace('px',''));
             el.style.left = left-pixel+'px';
             last = +new Date();
@@ -387,20 +381,17 @@ function pure_js_slideshow(options){
     }
     this.slideright = function(el,time,distance,toX,done){
         var last = +new Date();
-        //console.log(parseFloat(el.style.left.replace('px','')));
+        
         var pixel = parseFloat(distance/parseFloat((time/20)));
 
         function tick(){
             
-            //console.log((new Date()-last)/time);
+        
             var left = parseFloat(el.style.left.replace('px',''));
             el.style.left = left+pixel+'px';
-            //var thenum = parseFloat(el.style.left.replace('px','')) +  ( ( (new Date() - last) / time  *500 ) ) +'px';
-            //console.log(thenum);
-            //el.style.left =  thenum;
+        
             last = +new Date();
-            //console.log(el.style.left.replace('px',''));
-
+        
             if ( (parseFloat(el.style.left.replace('px',''))) < toX) {
            // (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
            setTimeout(tick,20);
@@ -430,10 +421,8 @@ function pure_js_slideshow(options){
 
         if(smove){
             if(pindex<cindex){
-                //we move left
                 me.moveThumbs('left',pindex,cindex)
             }else{
-                //we move right
                 me.moveThumbs('right',pindex,cindex);
             }
         }
@@ -477,8 +466,6 @@ function pure_js_slideshow(options){
     this.renderThumbs();
     this.selectThumb(0,0);
 
-
-    //console.log(this.width, this.height);
     this.resize_timeout = 0;
     this.onresized = function(){
         if(me.thumbnails){
@@ -490,7 +477,6 @@ function pure_js_slideshow(options){
         }
     };
     window.addEventListener('resize',function(){
-       // console.log(me.width, me.height);
         me.width = me.getWidth();
         me.height = me.getHeight();
         me.elem.style.width = me.width+'px';
@@ -597,10 +583,9 @@ function pure_js_slideshow(options){
             }
         }
         for(var m in images){
-            //load the first 2 times, because they will be animated first
-            //if(m<2){
-                me.loadImage(images[m],m,images_loaded)
-            //}
+            
+            me.loadImage(images[m],m,images_loaded)
+            
         }
     }
     
@@ -630,9 +615,8 @@ function pure_js_slideshow(options){
     }
     this.animate = function(currentIndex,toIndex){
 
-        
         me.currentIndex = currentIndex;
-        //console.log('animate:'+currentIndex);
+        
         var cindex = currentIndex;
         var nindex = cindex+1>=me.children_size?0:cindex+1;
         if(typeof toIndex!=='undefined' && toIndex!=currentIndex){
