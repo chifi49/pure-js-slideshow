@@ -4,7 +4,8 @@ No external dependencies required
 
 ## Installation
 Include the pure-js-slideshow.js script 
-<script src="pure-js-slideshow.js"></script>
+
+`<script src="pure-js-slideshow.js"></script>`
 
 Minimum html required
 ```
