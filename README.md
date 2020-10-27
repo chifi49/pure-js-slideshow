@@ -110,3 +110,24 @@ new pure_js_slideshow(
     }
 );
 ```
+### Methods
+
+the call to `new pure_js_slideshow({el:...}) return a javascript object with methods you can call
+
+`var slide1 = new pure_js_slideshow({el:document.getElementById('pure-slideshow')})`
+
+#### previousContent
+`slide1.previousContent()`
+moves to the previous content/image
+
+#### nextContent
+`slide1.nextContent()`
+moves to the next content/image
+
+#### first
+`slide1.first()`
+moves to the first content/image
+
+#### last
+`slide1.last()`
+moves to the last content/image
