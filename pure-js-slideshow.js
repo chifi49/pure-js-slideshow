@@ -246,7 +246,10 @@ function pure_js_slideshow(options){
             //me.images.push(img.src);
             var tsrc = img.getAttribute('data-thumb');
             if(tsrc==null){
-                tsrc = img.src;
+                tsrc = content.getAttribute('data-thumb');
+                if(tsrc==null){
+                    tsrc = img.src;
+                }
             }
             me.setupBackground(content,img.src,tsrc);
         }

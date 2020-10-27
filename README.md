@@ -12,10 +12,10 @@ No external dependencies required (~5.5kb gzipped)
 <div id="my-custom-id" class="pure-js-slideshow">
 	<div class="pure-js-slideshow-container">
 		<div class="pure-js-slideshow-content">
-            <img src="https://media.publit.io/file/islands/1.jpg"  />
+            <img src="./images/1.jpg"  />
         </div>
         <div class="pure-js-slideshow-content">
-            <img src="https://media.publit.io/file/islands/2.jpg"  />
+            <img src="./images/2.jpg"  />
         </div>
 	</div>
 </div>
