@@ -63,17 +63,19 @@
         <button onclick="pure1.thumbsVisible(false)">Hide Thumbs</button>
         &nbsp;
         <button onclick="pure1.thumbsVisible(true)">Show Thumbs</button>
+        &nbsp;
+        <button onclick="pure1.autoPlay(false)">Pause/Start Auto Play</button>
        <br />
        <script src="./pure-js-slideshow.js"></script>
         <script>
             
-            
+            var is_playing = true;
             var pure1 = null;
             window.addEventListener('DOMContentLoaded',function(){
                 pure1 = new pure_js_slideshow(
                     {
                         el:'#pure-js-slideshow',
-                        autoplay:true,
+                        autoplay: is_playing,
                         mobile:{
                             enabled: false, //your custom login to detect if its mobile or not 
                             maxheight: 750,

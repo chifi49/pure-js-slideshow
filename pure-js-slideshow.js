@@ -721,7 +721,7 @@ pure_js_slideshow.prototype.lastSlide = function(){
     this.moveTo(this.children_size-1);
 }
 pure_js_slideshow.prototype.autoPlay = function(state){
-    this.autplay = state
+    this.autoplay = state
 }
 pure_js_slideshow.prototype.getImages = function(){
     return this.images;
