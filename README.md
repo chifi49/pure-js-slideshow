@@ -134,3 +134,7 @@ moves to the last content/image
 #### currentIndex
 `slide1.getCurrentIndex()`
 gets the current index of content/image
+
+#### thumbsVisible(true or false)
+`slide1.thumbsVisible(true)`
+changes visibility of thumbnails to show or hidden

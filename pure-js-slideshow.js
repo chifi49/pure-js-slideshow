@@ -458,7 +458,8 @@ function pure_js_slideshow(options){
     }
     this.renderThumbs = function(){
         me.thumbElem = document.createElement('div');
-        me.thumbElem.style.cssText = 'position:relative;width:100%;overflow-x:hidden;height:'+me.thumbHeight+'px;';
+        var visible = me.thumbnails?'block':'none';
+        me.thumbElem.style.cssText = 'position:relative;width:100%;overflow-x:hidden;height:'+me.thumbHeight+'px;display:'+visible+';';
         me.thumbTbl = document.createElement('table');
         me.thumbTbl.style.cssText = 'position:absolute;top:0px;left:0px;border-style:none;padding:0;margin:0;border-width:0px;border-spacing:0;';
         var row = document.createElement('tr');
@@ -472,10 +473,10 @@ function pure_js_slideshow(options){
         me.thumbElem.appendChild(me.thumbTbl);
         me.prnt.appendChild(me.thumbElem);
     }
-    if(this.thumbnails){
-        this.renderThumbs();
-        this.selectThumb(0,0);
-    }
+    
+    this.renderThumbs();
+    this.selectThumb(0,0);
+
 
     //console.log(this.width, this.height);
     window.addEventListener('resize',function(){
@@ -670,6 +671,13 @@ function pure_js_slideshow(options){
     }//this.animate
     this.loadImages(this.images);
     return this;
+}
+pure_js_slideshow.prototype.thumbsVisible = function(visible){
+    if(visible){
+        this.thumbElem.style.display='block';
+    }else{
+        this.thumbElem.style.display='none';
+    }
 }
 pure_js_slideshow.prototype.getCurrentIndex = function(){
     return this.currentIndex;
