@@ -16,9 +16,6 @@ Minimum html required
         <div class="pure-js-slideshow-content">
             <img src="https://media.publit.io/file/islands/2.jpg"  />
         </div>
-        <div class="pure-js-slideshow-content">
-            <img src="https://media.publit.io/file/islands/3.jpg"  />
-        </div>
 	</div>
 </div>
 
