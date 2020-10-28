@@ -38,6 +38,7 @@ function pure_js_slideshow(options){
     this.drag_ghost.setAttribute('class','pure-js-slideshow-drag');
 
     this.dragging= false;
+    this.drag_callback = options.dragCallback?options.dragCallback:function(){};
     this.dragStartX = 0;
     this.dragDiff = 0;
     this.drag_autoplay = false;
@@ -46,15 +47,21 @@ function pure_js_slideshow(options){
             event.preventDefault();
             return;
         }
+
+        clearTimeout(me.animate_timeout_handler);
         //save the previous autoplay state
         me.drag_autoplay = me.autoplay;
         me.autoplay = false;
-        clearTimeout(me.animate_timeout_handler);
+        
 
         me.dragging = true;
-        me.dragStartX = event.pageX;
+        me.dragStartX = event.touches && event.touches.length>0?event.touches[0].pageX:event.pageX;
+
         document.addEventListener('mouseup',me.ondragend)
         document.addEventListener('mousemove',me.ondragging);
+
+        document.addEventListener('touchend',me.ondragend);
+        document.addEventListener('touchmove',me.ondragging);
 
         if(me.animation=='fade'){
             for(var i in me.children){
@@ -68,52 +75,148 @@ function pure_js_slideshow(options){
     this.ondragend = function(){
         me.dragging = false;
         var diff = me.dragDiff;
-        me.dragDiff = 0;
-        //restore the old autoplay
-        me.autoplay = me.drag_autoplay;
-
-        if(me.animation=='fade'){
-            for(var i in me.children){
-                me.children[i].style.left='0px';
-                if(i!=me.currentIndex){
-                    me.children[i].style.opacity=0;
+        
+        function reset(){
+            
+            //reset to old previous behavior
+            me.dragDiff = 0;
+            //restore the old autoplay
+            me.autoplay = me.drag_autoplay;
+            if(me.animation=='fade'){
+                for(var i in me.children){
+                    me.children[i].style.left='0px';
+                    if(i!=me.currentIndex){
+                        me.children[i].style.opacity=0;
+                    }
                 }
             }
+
+            if(me.autoplay){
+                me.animate_timeout_handler = setTimeout(function(){me.animate(me.currentIndex);},me.timeout);
+            }
+        }//reset state function
+
+        var should_reset = false;
+        
+        //if we dragged more than 25% of the content on either side than animate to next or previous content
+        if(me.width/4<Math.abs(diff)){
+            
+
+            if(diff<0){
+                var current_child = me.children[me.currentIndex];
+                var nindex = me.currentIndex+1>=me.children_size?0:me.currentIndex+1;
+                if(nindex>0){
+                    
+                    var next_child = me.children[nindex];
+                   
+                    var nnewleft = me.width + diff;
+                    next_child.style.left = nnewleft+'px'; 
+
+                    var c=0;
+                    var done = function(){
+                        c++;
+                        if(c==2){
+                            me.currentIndex = nindex;
+                            me.selectPage(nindex);
+                            me.selectThumb(nindex);
+                            reset();
+                        }
+                    };
+
+                    me.slideleft(current_child,me.transition,me.width,me.width*-1,done)
+                    me.slideleft(next_child,me.transition,me.width,0,done)
+                    
+                }else{
+                    current_child.style.left = '0px';
+                    
+                    should_reset=true;
+                }
+            }else{
+                var current_child = me.children[me.currentIndex];
+                var pindex = me.currentIndex-1<0?-1:me.currentIndex-1;
+                if(pindex>=0){
+                    var prev_child = me.children[pindex];
+
+                    var left = 0;
+                    prev_child.style.left = me.width*-1+diff+'px';
+                    
+                    var c=0;
+                    var done = function(){
+                        c++;
+                        if(c==2){
+                            me.currentIndex = pindex;
+                            me.selectPage(pindex);
+                            me.selectThumb(pindex);
+                            reset();
+                        }
+                    };
+                    me.slideright(current_child,me.transition,me.width,me.width,done)
+                    me.slideright(prev_child,me.transition,me.width,0,done)
+                    
+                }else{
+                    current_child.style.left='0px';
+                    should_reset=true;
+                }
+            }
+        }else{
+            var current_child = me.children[me.currentIndex];
+            if(diff<0){
+                var nindex = me.currentIndex+1>=me.children_size?0:me.currentIndex+1;
+                if(nindex>0){
+                    var next_child = me.children[nindex];
+                    next_child.style.left = me.width+'px';
+                }
+            }else{
+                var pindex = me.currentIndex-1<0?-1:me.currentIndex-1;
+                if(pindex>=0){
+                    var prev_child = me.children[pindex];
+                    prev_child.style.left = me.width*-1+'px';
+                }
+            }
+            current_child.style.left='0px';
+            should_reset=true;
         }
 
-        if(me.autoplay){
-            me.animate_timeout_handler = setTimeout(function(){me.animate(me.currentIndex);},me.transition);
+        if(should_reset){
+            reset();
         }
+        
         document.removeEventListener('mouseup',me.ondragend);
         document.removeEventListener('mousemove',me.ondragging)
 
+        document.removeEventListener('touchend',me.ondragend);
+        document.removeEventListener('touchmove',me.ondragging);
         
     }
     this.ondragging = function(event){
         if(me.dragging){
-            //console.log(event.pageX);
-            var diff = ( event.pageX - me.dragStartX );
+            
+            var pagex = event.touches && event.touches.length>0?event.touches[0].pageX:event.pageX;
+            var diff = ( pagex - me.dragStartX );
             me.dragDiff = diff;
-            //console.log(diff);
+            
+            
+
             if(diff<0){
-                //console.log('going left')
+                
                 var current_child = me.children[me.currentIndex];
-                //console.log(current_child);
-                //var left = parseInt( current_child.style.left.replace('px',''));
-                //var newleft = left + diff;
+                
                 current_child.style.left =  diff +'px';
 
                 var nindex = me.currentIndex+1>=me.children_size?0:me.currentIndex+1;
                 if(nindex>0){
                     var next_child = me.children[nindex];
-                    //var nleft = parseInt( next_child.style.left.replace('px',''));
+                   
                     var nnewleft = me.width + diff;
                     next_child.style.left = nnewleft+'px'; 
+
+                    me.drag_callback(me, me.currentIndex, nindex);
                 }else{
                     //do not make a drag
+                    me.drag_callback(me, me.currentIndex);
                 }
             }else{
-                //console.log('going right');
+                
                 var current_child = me.children[me.currentIndex];
                 current_child.style.left = diff+'px';
 
@@ -122,11 +225,22 @@ function pure_js_slideshow(options){
                     var prev_child = me.children[pindex];
                     var pnewleft = me.width *-1 + diff;
                     prev_child.style.left = pnewleft+'px';
+
+                    me.drag_callback(me, me.currentIndex, pindex);
+                }else{
+                    me.drag_callback(me, me.currentIndex);
                 }
             }
         }
     }
-    this.drag_ghost.addEventListener('mousedown',this.ondragstart);
+    this.dragContent = typeof options.dragContent!=='undefined'?options.dragContent:true;
+    if(this.dragContent){
+        this.drag_ghost.addEventListener('mousedown',this.ondragstart);
+        this.drag_ghost.addEventListener('touchstart',this.ondragstart);
+        this.drag_ghost.addEventListener('click',function(){
+          me.slide_clicked(me,me.currentIndex,me.children[me.currentIndex]);  
+        })
+    }
     
 
     this.prnt = typeof options.el=='string'?document.querySelector(options.el):options.el;

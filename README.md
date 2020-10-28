@@ -25,7 +25,7 @@ No external dependencies required (~5.5kb gzipped)
 
 ```
 new pure_js_slideshow({
-    'el': document.querySelector('#my-custom-id'),//or any other selector that returns one element
+    'el': document.querySelector('#my-custom-id')//or any other selector that returns one element
 })
 ```
 
@@ -35,12 +35,13 @@ new pure_js_slideshow({
 new pure_js_slideshow(
     {
         el:'#pure-js-slideshow',
-        animation:'fade',//set to "fade" or "slide"
-        autoplay:true,
+        animation:'fade',//defaults to fade, set to "fade" or "slide"
+        autoplay:true, //defaults to true, moves to next content every "timeout"
+        dragContent:true, (defaults to true, drag content left or right to move to previous or next content)
         mobile:{
             enabled: false, //your custom logic to detect if its mobile or not 
-            maxheight: 750,
-            minheight: 600
+            maxheight: 750, //max height of content in mobile device
+            minheight: 600 //min height of content in mobile device
         },
         timeout:3000, //the time that the script waits to move to the next content/image
         transition:750, //the time that takes to move between current and next content/image
@@ -72,14 +73,19 @@ new pure_js_slideshow(
             console.log('slide clicked',imageSrc);
         },
 
+        dragCallback:function(instance,currentIndex, newIndex){
+            //newIndex might be undefined
+            console.log(currentIndex,new Date());
+        },
+
         //navigation appearance (the previous and next arrows)
         navigation:{
-            visible:true, //hide => false or show => true
+            visible:true, //hide => false or show => true (defaults to true)
             borderColor:'#000',
             backgroundColor:'#000',
             arrowColor:'#fff',
             mobile:{
-                visible:true //hide or show if its on mobile state
+                visible:true //hide or show if its on mobile state (defaults to true)
             }
         },
 

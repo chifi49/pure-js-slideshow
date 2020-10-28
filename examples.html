@@ -75,8 +75,9 @@
                 pure1 = new pure_js_slideshow(
                     {
                         el:'#pure-js-slideshow',
-                        animation:'fade',
+                        animation:'slide',
                         autoplay: is_playing,
+                        dragContent: true,
                         mobile:{
                             enabled: false, //your custom login to detect if its mobile or not 
                             maxheight: 750,
@@ -87,6 +88,10 @@
                         maxheight:490,
                         minheight:390,
                         
+                        dragCallback:function(instance,currentIndex, newIndex){
+                            //newIndex might be undefined
+                            console.log(currentIndex,new Date());
+                        },
                         inited:function(instance,currentIndex){
                             console.log('plugin inited')
                         },
