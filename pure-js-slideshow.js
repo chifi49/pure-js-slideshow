@@ -315,6 +315,7 @@ function pure_js_slideshow(options){
     if(this.mobile && options.navigation &&  options.navigation.mobile && typeof options.navigation.mobile.visible!=='undefined'){
         this.navigation=options.navigation.mobile.visible;
     }
+    this.navRadius = options.navigation && options.navigation.radius?options.navigation.radius:'0px';
     this.navBorderColor = options.navigation && options.navigation.borderColor?options.navigation.borderColor:'#fff';
     this.navBackgroundColor = options.navigation && options.navigation.backgroundColor?options.navigation.backgroundColor:'#fff';
     this.navArrowColor = options.navigation && options.navigation.arrowColor?options.navigation.arrowColor:'#fff';
@@ -326,7 +327,7 @@ function pure_js_slideshow(options){
         me.previous.onclick = function(){
             me.previousContent();
         }
-        me.previous.style.cssText = 'position:absolute;top:45%;left:10px;z-index:'+(me.children_size+1)+';border:solid 1px '+me.navBorderColor+';padding:7px 9px;cursor:pointer;display:inline-block;background-color:'+me.navBackgroundColor+';';
+        me.previous.style.cssText = 'position:absolute;top:45%;left:10px;z-index:'+(me.children_size+1)+';border:solid 1px '+me.navBorderColor+';padding:7px 14px;cursor:pointer;display:inline-block;background-color:'+me.navBackgroundColor+';border-radius:'+this.navRadius+';';
         var previousc = document.createElement('span');
         previousc.style.cssText = 'margin:0;padding:0;width:0px;height:0px;display:inline-block;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:9px solid '+me.navArrowColor+';margin-top:3px;';
         me.previous.appendChild(previousc);
@@ -336,7 +337,7 @@ function pure_js_slideshow(options){
         me.next.onclick = function(){
             me.nextContent();
         }
-        me.next.style.cssText = 'position:absolute;top:45%;right:10px;z-index:'+(me.children_size+1)+';border:solid 1px '+me.navBorderColor+';padding:7px 9px;cursor:pointer;display:inline-block;background-color:'+me.navBackgroundColor+';';
+        me.next.style.cssText = 'position:absolute;top:45%;right:10px;z-index:'+(me.children_size+1)+';border:solid 1px '+me.navBorderColor+';padding:7px 14px;cursor:pointer;display:inline-block;background-color:'+me.navBackgroundColor+';border-radius:'+this.navRadius+';';
         var nextc = document.createElement('span');
         nextc.style.cssText = 'margin:0;padding:0;width:0px;height:0px;display:inline-block;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:9px solid '+me.navArrowColor+';margin-top:3px;';
         me.next.appendChild(nextc);
@@ -350,6 +351,8 @@ function pure_js_slideshow(options){
     if(this.mobile && options.pagination &&  options.pagination.mobile && typeof options.pagination.mobile.visible!=='undefined'){
         this.pagination=options.pagination.mobile.visible;
     }
+    this.pageSize = options.pagination && options.pagination.size?options.pagination.size:10;
+
     this.page_clicked = function(event){
         var t = event.currentTarget;
         var index = t.getAttribute('data-index');
@@ -357,7 +360,7 @@ function pure_js_slideshow(options){
     }
     this.renderPage = function(index){
         var pagea = document.createElement('span');
-        pagea.style.cssText = 'border-radius:10px;border:solid 1px #fff;width:10px;height:10px;display:inline-block;cursor:pointer;margin-left:2px;margin-right:2px;'
+        pagea.style.cssText = 'border-radius:'+me.pageSize+'px;border:solid 1px #fff;width:'+me.pageSize+'px;height:'+me.pageSize+'px;display:inline-block;cursor:pointer;margin-left:2px;margin-right:2px;'
         pagea.setAttribute('data-index',index);
         pagea.onclick = function(){
             var cindex = parseInt(this.getAttribute('data-index'))

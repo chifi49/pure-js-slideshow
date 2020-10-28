@@ -75,7 +75,7 @@
                 pure1 = new pure_js_slideshow(
                     {
                         el:'#pure-js-slideshow',
-                        animation:'slide',
+                        animation:'fade',
                         autoplay: is_playing,
                         dragContent: true,
                         mobile:{
@@ -109,9 +109,10 @@
                         },
                         navigation:{
                             visible:true,
-                            borderColor:'#000',
-                            backgroundColor:'#000',
+                            borderColor:'#fff',
+                            backgroundColor:'transparent',
                             arrowColor:'#fff',
+                            radius:'50%',//radius of arrows px or %
                             mobile:{
                                 visible:true
                             }
@@ -120,6 +121,7 @@
                             visible:true,
                             borderColor:'#fff',
                             backgroundColor:'#fff',
+                            size: 14,//defaults to 10
                             mobile:{
                                 visible:true
                             }
