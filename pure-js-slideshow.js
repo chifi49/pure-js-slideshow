@@ -997,9 +997,9 @@ pure_js_slideshow.prototype.firstSlide = function(){
 pure_js_slideshow.prototype.lastSlide = function(){
     this.moveTo(this.children_size-1);
 }
-pure_js_slideshow.prototype.autoPlay = function(state){
-    this.autoplay = state
-    if(state){
+pure_js_slideshow.prototype.autoPlay = function(play){
+    this.autoplay = play
+    if(play){
         this.animate(this.currentIndex);
     }else{
         clearTimeout(this.animate_timeout_handler);
