@@ -84,6 +84,7 @@ new pure_js_slideshow(
             borderColor:'#000',
             backgroundColor:'#000',
             arrowColor:'#fff',
+            radius:'50%',//radius of arrows px or %
             mobile:{
                 visible:true //hide or show if its on mobile state (defaults to true)
             }
@@ -94,6 +95,7 @@ new pure_js_slideshow(
             visible:true,
             borderColor:'#fff',
             backgroundColor:'#fff',
+            size: 14,//defaults to 10
             mobile:{
                 visible:true
             }
