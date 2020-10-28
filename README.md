@@ -1,6 +1,6 @@
 # pure-js-slideshow
 A content/gallery slideshow with fade or slide effect made with pure Javascript.
-No external dependencies required (~5.5kb gzipped)
+No external dependencies required (~6.5kb gzipped)
 
 ## Installation
 #### Include the pure-js-slideshow.js script 
