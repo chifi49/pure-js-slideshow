@@ -151,3 +151,7 @@ changes visibility of thumbnails to show or hidden
 #### autoPlay(true or false)
 `slide1.autoPlay(false)`
 stop or start the autoplay
+
+## Examples
+#### Live demo
+[View here](https://pure-js-slideshow-demo.vercel.app/)
