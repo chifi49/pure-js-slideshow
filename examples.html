@@ -100,6 +100,7 @@
                 pure1 = new pure_js_slideshow(
                     {
                         el:'#pure-js-slideshow',
+                        backgroundColor:'#000',
                         animation:'slide',
                         autoplay: is_playing,
                         dragContent: true,
@@ -135,7 +136,7 @@
                         slideClicked:function(instance,currentIndex,imageSrc){
                             console.log('slide clicked',imageSrc);
                         },
-                        /**
+                        
                         navigation:{
                             visible:true,
                             borderColor:'#fff',
@@ -146,7 +147,7 @@
                                 visible:true
                             }
                         },
-                        **/
+                        
                         pagination:{
                             visible:true,
                             borderColor:'#fff',
@@ -158,8 +159,8 @@
                         },
                         thumbnails:{
                             visible:true,
-                            borderColor:'#ffffff',
-                            selectedBorderColor:'#000000',
+                            borderColor:'#000000',
+                            selectedBorderColor:'#ffffff',
                             width:90,
                             height: 70,
                             mobile:{

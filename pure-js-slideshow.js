@@ -245,6 +245,8 @@ function pure_js_slideshow(options){
 
     this.prnt = typeof options.el=='string'?document.querySelector(options.el):options.el;
     this.prnt.style.position = 'relative';
+    this.backgroundColor = options.backgroundColor?options.backgroundColor:'#fff';
+    this.prnt.style.backgroundColor = this.backgroundColor;
 
     this.elem = this.prnt.querySelector('.pure-js-slideshow-container');
     this.elem.style.position = 'relative';
