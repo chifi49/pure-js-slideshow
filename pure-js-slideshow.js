@@ -584,6 +584,12 @@ function pure_js_slideshow(options){
                     heighttmp = me.minheight;
                 }
             }
+            if(me.user_maxheight!=null){
+                var user_maxheight = me.user_maxheight(me,me.height);
+                if(user_maxheight<heighttmp){
+                    heighttmp = user_maxheight;
+                }
+            }
             content.style.height = heighttmp+'px';
             content.style.width= me.width+'px';
             if(me.animation=='slide'){
