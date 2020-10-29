@@ -248,6 +248,25 @@ function pure_js_slideshow(options){
     this.backgroundColor = options.backgroundColor?options.backgroundColor:'#fff';
     this.prnt.style.backgroundColor = this.backgroundColor;
 
+    if(typeof options.keyboard!=='undefined' && options.keyboard){
+        this.prnt.setAttribute('tabindex',-1);
+        this.prnt.addEventListener('focus',function(){
+
+            me.prnt.style.border='none!important;';
+            me.prnt.style.boxShadow='0';
+            me.prnt.style.outlineColor='transparent';
+            
+           // alert(true);
+        })
+        this.prnt.addEventListener('keyup',function(){
+            if(event.keyCode==37){
+                me.previousContent();
+            }else if(event.keyCode==39){
+                me.nextContent();
+            }
+        })
+    }
+
     this.elem = this.prnt.querySelector('.pure-js-slideshow-container');
     this.elem.style.position = 'relative';
     this.elem.style.overflowX='hidden';
