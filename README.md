@@ -37,7 +37,8 @@ By default we apply middle and center placement
         </div>
         <div class="pure-js-slideshow-content">
             <img src="./images/2.jpg"  />
-            <div>
+            <div data-pos-v="bottom" data-pos-h="center">
+                <h2>Position bottom, center</h2>
             </div>
         </div>
 	</div>
