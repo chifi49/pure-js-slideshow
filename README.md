@@ -7,7 +7,7 @@ No external dependencies required (~6.5kb gzipped)
 
 `<script src="pure-js-slideshow.js"></script>`
 
-#### Minimum html required
+#### Minimum html required for an image slide
 ```
 <div id="my-custom-id" class="pure-js-slideshow">
 	<div class="pure-js-slideshow-container">
@@ -16,6 +16,29 @@ No external dependencies required (~6.5kb gzipped)
         </div>
         <div class="pure-js-slideshow-content">
             <img src="./images/2.jpg"  />
+        </div>
+	</div>
+</div>
+```
+
+#### Minimum html required for an image slide with text/button content
+Your text content should be placed in a "div" element. You can position your text/content vertically and horizontally with 2 data attributes.
+data-pos-v for vertical placement and possible values (top, middle, bottom)
+data-pos-h for horizontal placement and possible values (left, center right)
+By default we apply middle and center placement
+```
+<div id="my-custom-id" class="pure-js-slideshow">
+	<div class="pure-js-slideshow-container">
+		<div class="pure-js-slideshow-content">
+            <img src="./images/1.jpg"  />
+            <div>
+                <h2>Image 1</h2>
+            </div>
+        </div>
+        <div class="pure-js-slideshow-content">
+            <img src="./images/2.jpg"  />
+            <div>
+            </div>
         </div>
 	</div>
 </div>
