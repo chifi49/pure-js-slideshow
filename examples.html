@@ -12,9 +12,23 @@
             <div class="pure-js-slideshow-container">
                 <div class="pure-js-slideshow-content" data-thumb="./images/1.jpg" >
                     <img src="./images/1.jpg" />
+                    <div >
+                        
+                            <h1>Hi there</h1>
+                            <p>everything ok?</p>
+                            <div ><button onclick="pure1.nextSlide()">Next</button></div>
+                        
+                    </div>
                 </div>
                 <div class="pure-js-slideshow-content">
                     <img src="./images/2.jpg" data-thumb="./images/2.jpg" />
+                    <div >
+                        
+                        <h1>Hi there</h1>
+                        <p>everything ok?</p>
+                        <div ><button onclick="pure1.previousSlide()">Previous</button>&nbsp;<button onclick="pure1.nextSlide()">Next</button></div>
+                    
+                </div>
                 </div>
                 <div class="pure-js-slideshow-content">
                     <img src="./images/3.jpg" data-thumb="./images/3.jpg" />
@@ -69,13 +83,13 @@
        <script src="./pure-js-slideshow.js"></script>
         <script>
             
-            var is_playing = true;
+            var is_playing = false;
             var pure1 = null;
             window.addEventListener('DOMContentLoaded',function(){
                 pure1 = new pure_js_slideshow(
                     {
                         el:'#pure-js-slideshow',
-                        animation:'fade',
+                        animation:'slide',
                         autoplay: is_playing,
                         dragContent: true,
                         mobile:{

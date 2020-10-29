@@ -449,7 +449,25 @@ function pure_js_slideshow(options){
         me.image_thumbs.push(tsrc);
 
     }//setup background image style attribute to div.pure-js-slideshow-content
-
+    this.setupText = function(parent,child){
+        var posv = child.getAttribute('data-pos-v') || 'middle';
+        var posh = child.getAttribute('data-pos-h') || 'center';
+        var card = document.createElement('div');
+        card.style.cssText = 'display:table;height:100%;';
+        if(posh=='center'){
+            card.style.margin = '0 auto';
+        }
+        var cell = document.createElement('div');
+        cell.style.cssText = 'display:table-cell;';
+        cell.style.verticalAlign= posv;
+        var text = document.createElement('div');
+        text.style.cssText = 'position:relative;z-index:'+me.children_size+1;
+        text.innerHTML = child.innerHTML;
+        cell.appendChild(text);
+        card.appendChild(cell);
+        parent.removeChild(child);
+        parent.appendChild(card);
+    }
     this.setupBackgrounds = function(){
         for(var i in me.children){
             var content = me.children[i];
@@ -464,6 +482,10 @@ function pure_js_slideshow(options){
                 if(tsrc==null){
                     tsrc = img.src;
                 }
+            }
+            var text = content.querySelector('div:first-child');
+            if(text!=null){
+                me.setupText(content, text);
             }
             me.setupBackground(content,img.src,tsrc);
         }
