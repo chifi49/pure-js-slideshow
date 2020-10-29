@@ -778,6 +778,8 @@ function pure_js_slideshow(options){
         tick();
     
     }
+    this.imageRatio = options.imageRatio?parseInt(options.imageRatio):0;
+
     this.loadImage = function(src,index,done){
         var img = new Image();
         img.onload = function(){
@@ -792,6 +794,9 @@ function pure_js_slideshow(options){
             content.setAttribute('data-img-dir',direction);
             content.setAttribute('data-img-width',w);
             content.setAttribute('data-img-height',h);
+            if( ( me.imageRatio==1 && w<h) || me.imageRatio==2){
+                content.style.backgroundSize='auto 100%';
+            }
             if(index<2)done();
         }
         img.onerror = function(){

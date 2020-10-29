@@ -57,10 +57,16 @@
                     <img src="./images/9.jpg" data-thumb="./images/9.jpg" />
                 </div>
                 <div class="pure-js-slideshow-content">
+                    <img src="./images/13.jpg" data-thumb="./images/13.jpg" />
+                </div>
+                <div class="pure-js-slideshow-content">
                     <img src="./images/10.jpg" data-thumb="./images/10.jpg" />
                 </div>
                 <div class="pure-js-slideshow-content">
                     <img src="./images/11.jpg" data-thumb="./images/11.jpg" />
+                </div>
+                <div class="pure-js-slideshow-content">
+                    <img src="./images/14.jpg" data-thumb="./images/14.jpg" />
                 </div>
                 <div class="pure-js-slideshow-content">
                     <img src="./images/12.jpg" data-thumb="./images/12.jpg" />
@@ -97,6 +103,9 @@
                         animation:'slide',
                         autoplay: is_playing,
                         dragContent: true,
+                        imageRatio:1,//defaults to 0, show images with background-size: cover;
+                        //imageRatio==1, show vertical images with background-size: auto 100%
+                        //imageRatio==2, show all images with background-size: auto 100%;
                         mobile:{
                             enabled: false, //your custom login to detect if its mobile or not 
                             maxheight: 750,
