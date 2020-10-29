@@ -453,15 +453,13 @@ function pure_js_slideshow(options){
         var posv = child.getAttribute('data-pos-v') || 'middle';
         var posh = child.getAttribute('data-pos-h') || 'center';
         var card = document.createElement('div');
-        card.style.cssText = 'display:table;height:100%;';
-        if(posh=='center'){
-            card.style.margin = '0 auto';
-        }
+        card.style.cssText = 'display:table;height:100%;width:100%;';
+        card.style.textAlign=posh;
         var cell = document.createElement('div');
         cell.style.cssText = 'display:table-cell;';
         cell.style.verticalAlign= posv;
         var text = document.createElement('div');
-        text.style.cssText = 'position:relative;z-index:'+me.children_size+1;
+        text.style.cssText = 'position:relative;display:inline-block;z-index:'+me.children_size+1;
         text.innerHTML = child.innerHTML;
         cell.appendChild(text);
         card.appendChild(cell);
