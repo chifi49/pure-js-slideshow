@@ -61,7 +61,12 @@ new pure_js_slideshow(
         el:'#pure-js-slideshow',
         animation:'fade',//defaults to fade, set to "fade" or "slide"
         autoplay:true, //defaults to true, moves to next content every "timeout"
-        dragContent:true, (defaults to true, drag content left or right to move to previous or next content)
+        dragContent:true, (defaults to true, drag content left or right to move to previous or next content),
+        backgroundColor:'#000',
+        keyboard: true,//defaults to false, move slides with left and right arrows when element has focus
+        imageRatio:1,//defaults to 0, show images with background-size: cover;
+                        //imageRatio==1, show vertical images with background-size: auto 100%
+                        //imageRatio==2, show all images with background-size: auto 100%;
         mobile:{
             enabled: false, //your custom logic to detect if its mobile or not 
             maxheight: 750, //max height of content in mobile device
