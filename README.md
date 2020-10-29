@@ -76,7 +76,15 @@ new pure_js_slideshow(
         transition:750, //the time that takes to move between current and next content/image
         maxheight:490, //maximum height (by default the content appears 100% in window viewport)
         minheight:390, //minimum height 
-        
+
+        /** height Resize function to return maximum height with user custom logic**/
+        maxheightResizer:function(me,winheight){
+            console.log('t',me.thumbHeight);
+            if(me.thumbHeight){
+                return winheight-me.thumbHeight
+            }
+            return winheight;
+        },
         //callback after the plugin inited (downloads the first 2 images and is ready to accept interaction or animate the content)
         inited:function(instance,currentIndex){
             console.log('plugin inited')

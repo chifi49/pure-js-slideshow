@@ -427,10 +427,27 @@ function pure_js_slideshow(options){
     }
 
     this.width = this.getWidth();
+
+    this.currentIndex = 0;
+    this.animation = options.animation || 'fade';
+
+    this.thumbnails = options.thumbnails && options.thumbnails.visible?options.thumbnails.visible:false;
+    if(this.mobile && options.thumbnails &&  options.thumbnails.mobile && typeof options.thumbnails.mobile.visible!=='undefined'){
+        this.thumbnails=options.thumbnails.mobile.visible;
+    }
+
+    this.thumbsBorderColor = options.thumbnails && options.thumbnails.borderColor?options.thumbnails.borderColor:'#fff';
+    this.thumbsSelBorderColor = options.thumbnails && options.thumbnails.selectedBorderColor?options.thumbnails.selectedBorderColor:'#000';
+    this.thumbWidth = options.thumbnails && options.thumbnails.width?parseInt(options.thumbnails.width):80;
+    this.thumbHeight = options.thumbnails && options.thumbnails.height?parseInt(options.thumbnails.height):70;
+    this.thumbElem = null;
+    this.thumbTbl = null;
+
     this.maxheight = options.maxheight?options.maxheight:0;
     if(this.mobile && options.mobile && options.mobile.maxheight){
         this.maxheight= options.mobile.maxheight;
     }
+    this.user_maxheight = options.maxheightResizer?options.maxheightResizer:null;
     this.minheight = options.minheight?options.minheight:0;
     if(this.mobile && options.mobile && options.mobile.minheight){
         this.minheight = options.mobile.minheight;
@@ -444,16 +461,18 @@ function pure_js_slideshow(options){
             heighttmp = this.maxheight;
         }
     }
+    if(this.user_maxheight!=null){
+        var user_maxheight = this.user_maxheight(this,this.height);
+        if(user_maxheight<heighttmp){
+            heighttmp = user_maxheight;
+        }
+    }
     if(this.minheight>0){
         if(this.minheight>heighttmp){
             heighttmp = this.minheight;
         }
     }
     this.elem.style.height = heighttmp+'px';
-
-    
-    this.currentIndex = 0;
-    this.animation = options.animation || 'fade';
 
     this.slide_callback = options.slideClicked?options.slideClicked:function(){}
     
@@ -521,6 +540,14 @@ function pure_js_slideshow(options){
                     heighttmp = me.maxheight;
                 }
             }
+            if(me.user_maxheight!=null){
+                console.log('user maxheight');
+                var user_maxheight = me.user_maxheight(me,me.height);
+                console.log(user_maxheight,me.height);
+                if(user_maxheight<heighttmp){
+                    heighttmp = user_maxheight;
+                }
+            }
             if(me.minheight>0){
                 if(me.minheight>heighttmp){
                     heighttmp = me.minheight;
@@ -571,17 +598,7 @@ function pure_js_slideshow(options){
         }
     }//resizeBackgrounds (div.pure-js-slideshow-content)
 
-    this.thumbnails = options.thumbnails && options.thumbnails.visible?options.thumbnails.visible:false;
-    if(this.mobile && options.thumbnails &&  options.thumbnails.mobile && typeof options.thumbnails.mobile.visible!=='undefined'){
-        this.thumbnails=options.thumbnails.mobile.visible;
-    }
-
-    this.thumbsBorderColor = options.thumbnails && options.thumbnails.borderColor?options.thumbnails.borderColor:'#fff';
-    this.thumbsSelBorderColor = options.thumbnails && options.thumbnails.selectedBorderColor?options.thumbnails.selectedBorderColor:'#000';
-    this.thumbWidth = options.thumbnails && options.thumbnails.width?parseInt(options.thumbnails.width):80;
-    this.thumbHeight = options.thumbnails && options.thumbnails.height?parseInt(options.thumbnails.height):70;
-    this.thumbElem = null;
-    this.thumbTbl = null;
+    
     this.moveThumbs = function(direction,fromIndex,toIndex){
         if(!me.animating){
             
@@ -744,11 +761,18 @@ function pure_js_slideshow(options){
                 heighttmp = me.maxheight;
             }
         }
+        if(me.user_maxheight!=null){
+            var user_maxheight = me.user_maxheight(me,me.height);
+            if(user_maxheight<heighttmp){
+                heighttmp = user_maxheight;
+            }
+        }
         if(me.minheight>0){
             if(me.minheight>heighttmp){
                 heighttmp = me.minheight;
             }
         }
+
         me.elem.style.height = heighttmp+'px';
         me.resizeBackgrounds();
         clearTimeout(me.resize_timeout);

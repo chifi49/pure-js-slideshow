@@ -115,7 +115,13 @@
                         },
                         timeout:3000,
                         transition:750,
-                        maxheight:490,
+                        //maxheight:490,
+                        maxheightResizer:function(me,winheight){
+                            if(me.thumbHeight){
+                                return winheight-me.thumbHeight
+                            }
+                            return winheight;
+                        },
                         minheight:390,
                         
                         dragCallback:function(instance,currentIndex, newIndex){
