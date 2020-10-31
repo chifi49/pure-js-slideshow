@@ -59,6 +59,7 @@ new pure_js_slideshow({
 new pure_js_slideshow(
     {
         el:'#pure-js-slideshow',
+        fullscreen: true,//defaults to false, if true shows top right expand icon, you can call fullScreen api method as well
         animation:'fade',//defaults to fade, set to "fade" or "slide"
         autoplay:true, //defaults to true, moves to next content every "timeout"
         dragContent:true, (defaults to true, drag content left or right to move to previous or next content),
@@ -188,6 +189,12 @@ changes visibility of thumbnails to show or hidden
 #### autoPlay(true or false)
 `slide1.autoPlay(false)`
 stop or start the autoplay
+
+#### fullSreen()
+`slide1.fullScreen()`
+request full screen
+`slide1.fullScreen(true)`
+exit full screen
 
 ## Examples
 #### Live demo
