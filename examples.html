@@ -90,6 +90,8 @@
         <button onclick="pure1.thumbsVisible(true)">Show Thumbs</button>
         &nbsp;
         <button onclick="is_playing=!is_playing;pure1.autoPlay(is_playing)">Pause/Start Auto Play</button>
+        &nbsp;
+        <button onclick="pure1.fullScreen()">Full Screen</button>
        <br />
        <script src="./pure-js-slideshow.js"></script>
         <script>
@@ -100,6 +102,7 @@
                 pure1 = new pure_js_slideshow(
                     {
                         el:'#pure-js-slideshow',
+                        fullscreen:true,//defaults to false, shows icon for full screen
                         backgroundColor:'#000',
                         keyboard: true,//defaults to false, move slides with left and right arrows when element has focus
                         animation:'slide',

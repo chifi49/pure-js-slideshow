@@ -248,6 +248,8 @@ function pure_js_slideshow(options){
     this.backgroundColor = options.backgroundColor?options.backgroundColor:'#fff';
     this.prnt.style.backgroundColor = this.backgroundColor;
 
+    
+
     if(typeof options.keyboard!=='undefined' && options.keyboard){
         this.prnt.setAttribute('tabindex',-1);
         this.prnt.addEventListener('focus',function(){
@@ -284,6 +286,45 @@ function pure_js_slideshow(options){
         me.children.push(celem);
     })
     this.children_size = this.children.length;
+
+    this.full_screen_elem = document.createElement('a');
+    this.full_screen_elem.innerHTML = '&#8599;';
+    this.full_screen_elem.style.cssText = 'cursor:pointer;position:absolute;top:20px;right:20px;color:#fff;z-index:'+(me.children_size+1)+';font-size:20px;';
+    var span_icon = document.createElement('span');
+    span_icon.innerHTML = '&#8601;';
+    span_icon.style.cssText = 'position:absolute;top:0px;left:0px;color:#fff;';
+    //&#8598;
+    var span_icon2 = document.createElement('span');
+    span_icon2.innerHTML = '&#8599;';
+    span_icon2.style.cssText = 'position:absolute;top:1px;left:-1px;color:#fff;transform:rotate(-90deg)';
+
+    var span_icon3 = document.createElement('span');
+    span_icon3.innerHTML = '&#8601;';
+    span_icon3.style.cssText = 'position:absolute;top:1px;left:-1px;color:#fff;transform:rotate(-90deg)';
+
+    this.full_screen_elem.appendChild(span_icon);
+    this.full_screen_elem.appendChild(span_icon2);
+    this.full_screen_elem.appendChild(span_icon3);
+    this.full_screen = false;
+    document.addEventListener('fullscreenchange',function(event){
+        //console.log(event);
+        if(document.fullscreenElement==me.prnt){
+            me.full_screen = true;
+        }else{
+            me.full_screen = false;
+            //console.log('exited');
+        }
+    })
+    if(typeof options.fullscreen!=='undefined' && options.fullscreen){
+        this.elem.appendChild(this.full_screen_elem);
+        this.full_screen_elem.onclick = function(){
+            if(me.full_screen){
+                document.exitFullscreen();
+            }else{
+                me.fullScreen();
+            }
+        }
+    }
 
     this.previousContent = function(){
         if(!me.inited){
@@ -1038,6 +1079,15 @@ function pure_js_slideshow(options){
     this.drag_ghost.style.zIndex = this.images.length;
     this.elem.appendChild(this.drag_ghost);
     return this;
+}
+pure_js_slideshow.prototype.fullScreen = function(close){
+    if(close && this.full_screen){
+        document.exitFullscreen();
+    }else{
+    if(this.prnt.requestFullscreen){
+        this.prnt.requestFullscreen();
+    }
+}
 }
 pure_js_slideshow.prototype.thumbsVisible = function(visible){
     if(visible){
