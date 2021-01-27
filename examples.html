@@ -105,7 +105,7 @@
                         fullscreen:true,//defaults to false, shows icon for full screen
                         backgroundColor:'#000',
                         keyboard: true,//defaults to false, move slides with left and right arrows when element has focus
-                        animation:'slide',
+                        animation:'fade',
                         autoplay: is_playing,
                         dragContent: true,
                         imageRatio:1,//defaults to 0, show images with background-size: cover;
@@ -119,32 +119,54 @@
                         timeout:3000,
                         transition:750,
                         //maxheight:490,
+                        dynamicHeightResizer:function(me,winheight){
+                            var win = window,
+                            doc = document,
+                            docElem = doc.documentElement,
+                            body = doc.getElementsByTagName('body')[0];
+                            var winwidth = win.innerWidth || docElem.clientWidth || body.clientWidth;
+                            var height = winwidth * 78/100;
+                            console.log('height',height)
+                            height = winwidth * 0.66;
+                            return height;
+                        },
+                        
                         maxheightResizer:function(me,winheight){
+                            var win = window,
+                            doc = document,
+                            docElem = doc.documentElement,
+                            body = doc.getElementsByTagName('body')[0];
+                            var winwidth = win.innerWidth || docElem.clientWidth || body.clientWidth;
+                            var winheight2 = win.innerHeight || docElem.clientHeight || body.clientHeight;
+                            var height = winwidth * 78/100;
+                            console.log('h',height);
                             if(me.thumbHeight){
                                 return winheight-me.thumbHeight
                             }
-                            return winheight;
+                            return winheight2;
                         },
-                        minheight:390,
+                        
+                        //minheight:390,
                         
                         dragCallback:function(instance,currentIndex, newIndex){
                             //newIndex might be undefined
-                            console.log(currentIndex,new Date());
+                            //console.log(currentIndex,new Date());
                         },
                         inited:function(instance,currentIndex){
-                            console.log('plugin inited')
+                            //console.log('plugin inited')
+                            console.log(1280/1920);
                         },
                         animated:function(instance,currentIndex){
-                            console.log('animated',currentIndex);
+                            //console.log('animated',currentIndex);
                         },
                         thumbSelected:function(instance,currentIndex,imageSrc){
-                            console.log('thumb selected',imageSrc);
+                            //console.log('thumb selected',imageSrc);
                         },
                         pageSelected:function(instance,currentIndex,imageSrc){
 
                         },
                         slideClicked:function(instance,currentIndex,imageSrc){
-                            console.log('slide clicked',imageSrc);
+                            //console.log('slide clicked',imageSrc);
                         },
                         
                         navigation:{
@@ -168,7 +190,7 @@
                             }
                         },
                         thumbnails:{
-                            visible:true,
+                            visible:false,
                             borderColor:'#000000',
                             selectedBorderColor:'#ffffff',
                             width:90,

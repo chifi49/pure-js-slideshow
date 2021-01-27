@@ -488,6 +488,9 @@ function pure_js_slideshow(options){
     if(this.mobile && options.mobile && options.mobile.maxheight){
         this.maxheight= options.mobile.maxheight;
     }
+
+    this.user_dynamicheight = options.dynamicHeightResizer?options.dynamicHeightResizer:null;
+
     this.user_maxheight = options.maxheightResizer?options.maxheightResizer:null;
     this.minheight = options.minheight?options.minheight:0;
     if(this.mobile && options.mobile && options.mobile.minheight){
@@ -502,6 +505,14 @@ function pure_js_slideshow(options){
             heighttmp = this.maxheight;
         }
     }
+
+
+    //this resizes automatically the height like aspect ratio based on width but not the maxheight or minheight
+    if(this.user_dynamicheight!=null){
+        var user_dynamicheight = this.user_dynamicheight(this,this.height);
+        heighttmp = user_dynamicheight;
+    }
+
     if(this.user_maxheight!=null){
         var user_maxheight = this.user_maxheight(this,this.height);
         if(user_maxheight<heighttmp){
@@ -513,6 +524,9 @@ function pure_js_slideshow(options){
             heighttmp = this.minheight;
         }
     }
+
+    
+
     this.elem.style.height = heighttmp+'px';
 
     this.slide_callback = options.slideClicked?options.slideClicked:function(){}
@@ -581,6 +595,11 @@ function pure_js_slideshow(options){
                     heighttmp = me.maxheight;
                 }
             }
+
+            if(me.user_dynamicheight!=null){
+                var user_dynamicheight = me.user_dynamicheight(me,me.height);
+                heighttmp = user_dynamicheight;
+            }
             if(me.user_maxheight!=null){
                 console.log('user maxheight');
                 var user_maxheight = me.user_maxheight(me,me.height);
@@ -594,6 +613,7 @@ function pure_js_slideshow(options){
                     heighttmp = me.minheight;
                 }
             }
+            
             content.style.height = heighttmp+'px';
             content.style.width= me.width+'px';
             content.style.position='absolute';
@@ -620,6 +640,11 @@ function pure_js_slideshow(options){
                     heighttmp = me.maxheight;
                 }
             }
+
+            if(me.user_dynamicheight!=null){
+                var user_dynamicheight = me.user_dynamicheight(me,me.height);
+                heighttmp = user_dynamicheight;
+            }
             if(me.minheight>0){
                 if(me.minheight>heighttmp){
                     heighttmp = me.minheight;
@@ -631,6 +656,7 @@ function pure_js_slideshow(options){
                     heighttmp = user_maxheight;
                 }
             }
+            
             content.style.height = heighttmp+'px';
             content.style.width= me.width+'px';
             if(me.animation=='slide'){
@@ -790,15 +816,6 @@ function pure_js_slideshow(options){
 
     this.resize_timeout = 0;
     this.onresized = function(){
-        if(me.thumbnails){
-            var mewidth = me.width;
-            var twidth = me.thumbTbl.offsetWidth;
-            if(me.width>twidth){
-                me.thumbTbl.style.left = '0px';
-            }
-        }
-    };
-    window.addEventListener('resize',function(){
         me.width = me.getWidth();
         me.height = me.getHeight();
         me.elem.style.width = me.width+'px';
@@ -807,6 +824,11 @@ function pure_js_slideshow(options){
             if(me.maxheight<heighttmp){
                 heighttmp = me.maxheight;
             }
+        }
+
+        if(me.user_dynamicheight!=null){
+            var user_dynamicheight = me.user_dynamicheight(me,me.height);
+            heighttmp = user_dynamicheight;
         }
         if(me.user_maxheight!=null){
             var user_maxheight = me.user_maxheight(me,me.height);
@@ -819,11 +841,23 @@ function pure_js_slideshow(options){
                 heighttmp = me.minheight;
             }
         }
+        
 
         me.elem.style.height = heighttmp+'px';
         me.resizeBackgrounds();
+        
+        if(me.thumbnails){
+            var mewidth = me.width;
+            var twidth = me.thumbTbl.offsetWidth;
+            if(me.width>twidth){
+                me.thumbTbl.style.left = '0px';
+            }
+        }
+    };
+    window.addEventListener('resize',function(){
+        
         clearTimeout(me.resize_timeout);
-        setTimeout(function(){
+        me.resize_timeout = setTimeout(function(){
             me.onresized();
         },100);
     })
