@@ -78,6 +78,18 @@ new pure_js_slideshow(
         maxheight:490, //maximum height (by default the content appears 100% in window viewport)
         minheight:390, //minimum height 
 
+        /** dynamic height resizer **
+        dynamicHeightResizer:function(me,winheight){
+            var ratio = 1280 / 1920;
+            var win = window,
+                            doc = document,
+                            docElem = doc.documentElement,
+                            body = doc.getElementsByTagName('body')[0];
+                            var winwidth = win.innerWidth || docElem.clientWidth || body.clientWidth;
+            var height = winwidth * ratio;
+            return height;
+        },
+
         /** height Resize function to return maximum height with user custom logic**/
         maxheightResizer:function(me,winheight){
             console.log('t',me.thumbHeight);
